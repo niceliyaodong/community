@@ -32,4 +32,13 @@ public class GithubUserEntity {
     public void setDio(String dio) {
         this.dio = dio;
     }
+
+    @Override
+    public String toString() {
+        return "GithubUserEntity{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", dio='" + dio + '\'' +
+                '}';
+    }
 }
