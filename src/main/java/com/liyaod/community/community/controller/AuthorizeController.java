@@ -11,7 +11,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.UUID;
 
 /**
@@ -35,7 +37,7 @@ public class AuthorizeController {
     private String redirectUri;
 
     @GetMapping("/callback")
-    public String callback(@RequestParam(name = "code") String code, @RequestParam(name = "state") String state, HttpServletRequest request) {
+    public String callback(@RequestParam(name = "code") String code, @RequestParam(name = "state") String state, HttpServletResponse response) {
         AccessTokenEntity accessTokenEntity = new AccessTokenEntity();
         accessTokenEntity.setClient_id(clientId);
         accessTokenEntity.setClient_secret(clientSecret);
@@ -51,9 +53,12 @@ public class AuthorizeController {
             user.setGmtCreate(System.currentTimeMillis());
             user.setGmtModifile(System.currentTimeMillis());
             user.setName(gethubUser.getName());
-            user.setToken(UUID.randomUUID().toString());
+            String token = UUID.randomUUID().toString();
+            user.setToken(token);
             userMapper.inserUser(user);
-            request.getSession().setAttribute("user", gethubUser);
+            Cookie cookie = new Cookie("token",token);
+            response.addCookie(cookie);
+            //request.getSession().setAttribute("user", gethubUser);
             return "redirect:/";
         } else {
             return "redirect:/";

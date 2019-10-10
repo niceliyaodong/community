@@ -1,5 +1,7 @@
 server:
   port: 8889
+  tomcat:
+    uri-encoding: utf-8
 
 github:
   client:
@@ -7,10 +9,29 @@ github:
     secret: 73e40515a345fc6e0c5fdad4816a5bf88ea82d3a
   redirect:
     uri: http://localhost:8889/callback
-
+#激活配置环境
 spring:
+  profiles:
+    active: mysql
+---
+# h2数据库环境
+spring:
+  profiles: h2
   datasource:
     url: jdbc:h2:D:/h2/community
     password: sa
     username: 123
     driver-class-name: org.h2.Driver
+---
+spring:
+  profiles: mysql
+  #数据库相关配置
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/community?characterEncoding=UTF-8&serverTimezone=GMT
+    username: root
+    password: root
+    max-idle: 10
+    max-wait: 10000
+    min-idle: 5
+    initial-size: 5
