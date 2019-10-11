@@ -24,6 +24,10 @@ spring:
     driver-class-name: org.h2.Driver
 ---
 spring:
+  flyway:
+    enabled: true
+    locations: classpath:db/mysql
+   # check-location: false
   profiles: mysql
   #数据库相关配置
   datasource:
