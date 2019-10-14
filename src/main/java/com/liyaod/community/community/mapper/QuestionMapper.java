@@ -3,6 +3,9 @@ package com.liyaod.community.community.mapper;
 import com.liyaod.community.community.model.Question;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
+
+import java.util.List;
 
 /**
  * @author liyaod
@@ -14,4 +17,6 @@ public interface QuestionMapper {
     @Insert("insert into question (title,description,gmt_create,gmt_modifile,creater,tag) values(#{title},#{description},#{gmtCreate},#{gmtModifile},#{creater},#{tag})")
     void inserQuestion(Question question);
 
+    @Select("select * from question")
+    List<Question> findAllQuestions();
 }

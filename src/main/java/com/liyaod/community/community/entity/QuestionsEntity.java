@@ -1,13 +1,15 @@
-package com.liyaod.community.community.model;
+package com.liyaod.community.community.entity;
 
+import com.liyaod.community.community.model.User;
 import lombok.Data;
 
 /**
  * @author liyaod
- * @create 2019-10-11  16:38
+ * 问题实体类
+ * @create 2019-10-14  17:14
  */
 @Data
-public class Question {
+public class QuestionsEntity {
     private Integer id;
     private String title;
     private String description;
@@ -18,4 +20,6 @@ public class Question {
     private Integer viewCount;
     private Integer likeCount;
     private String tag;
+    private User user;
+
 }

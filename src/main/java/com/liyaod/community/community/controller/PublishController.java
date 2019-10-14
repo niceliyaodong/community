@@ -43,25 +43,30 @@ public class PublishController {
             @RequestParam(value = "tag", required = false) String tag,
             HttpServletRequest request,
             Model model) {
-        System.out.println(title);
+        model.addAttribute("title",title);
+        model.addAttribute("description",description);
+        model.addAttribute("tag",tag);
         Question question = new Question();
         question.setTitle(title);
         question.setDescription(description);
         question.setTag(tag);
         User user = null;
         Cookie[] cookies = request.getCookies();
-        for (Cookie cookie : cookies) {
-            if (cookie.getName().equals("token")) {
-                String token = cookie.getValue();
-                user = userMapper.findOmeByToken(token);
-                if (user != null) {
-                    request.getSession().setAttribute("user", user);
+        if(cookies != null){
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("token")) {
+                    String token = cookie.getValue();
+                    user = userMapper.findOmeByToken(token);
+                    if (user != null) {
+                        request.getSession().setAttribute("user", user);
+                    }
+                    break;
                 }
-                break;
             }
         }
+        System.out.println(user);
         if (user == null) {
-            model.addAttribute("eror", "用户为登录，请登录");
+            model.addAttribute("error", "用户为登录，请登录");
             //返回当前页面
             return "publish";
         }

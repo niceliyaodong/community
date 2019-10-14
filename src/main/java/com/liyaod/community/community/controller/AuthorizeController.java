@@ -53,6 +53,7 @@ public class AuthorizeController {
             user.setGmtCreate(System.currentTimeMillis());
             user.setGmtModifile(System.currentTimeMillis());
             user.setName(gethubUser.getName());
+            user.setAvatarUrl(gethubUser.getAvatarUrl());
             String token = UUID.randomUUID().toString();
             user.setToken(token);
             userMapper.inserUser(user);
