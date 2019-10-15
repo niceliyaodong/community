@@ -10,6 +10,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -26,13 +27,22 @@ public class QuestionServiceImpl implements QuestionService {
     private UserMapper userMapper;
 
     @Override
-    public List<QuestionsEntity> getIndexQusetionList() {
+    public List<QuestionsEntity> getIndexQusetionList(int pageNo,int pageSize) {
         List<Question> listQuestion = questionMapper.findAllQuestions();
+        List<QuestionsEntity> questionsEntityList = new ArrayList<QuestionsEntity>();
         for (Question question : listQuestion) {
-            Integer creater = question.getCreater();
-            User user = userMapper.findUserById(creater);
-            BeanUtils.copyProperties();
+            String creater = question.getCreater();
+            User user = userMapper.findUserByAccountId(creater);
+            QuestionsEntity questionsEntity = new QuestionsEntity();
+            BeanUtils.copyProperties(question,questionsEntity);
+            questionsEntity.setUser(user);
+            questionsEntityList.add(questionsEntity);
         }
-        return null;
+        return questionsEntityList;
+    }
+
+    @Override
+    public void inserQuestion(Question question) {
+        questionMapper.inserQuestion(question);
     }
 }

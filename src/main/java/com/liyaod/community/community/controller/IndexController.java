@@ -1,9 +1,11 @@
 package com.liyaod.community.community.controller;
 
+import com.github.pagehelper.PageInfo;
 import com.liyaod.community.community.entity.QuestionsEntity;
 import com.liyaod.community.community.mapper.UserMapper;
 import com.liyaod.community.community.model.User;
 import com.liyaod.community.community.service.QuestionService;
+import com.liyaod.community.community.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,7 +27,7 @@ import java.util.List;
 public class IndexController {
 
     @Autowired
-    private UserMapper userMapper;
+    private UserService userService;
 
     @Autowired
     private QuestionService questionService;
@@ -37,7 +39,7 @@ public class IndexController {
             for (Cookie cookie : cookies) {
                 if (cookie.getName().equals("token")){
                     String token = cookie.getValue();
-                    User user = userMapper.findOmeByToken(token);
+                    User user = userService.findOmeByToken(token);
                     if(user != null){
                         request.getSession().setAttribute("user",user);
                     }
@@ -54,8 +56,9 @@ public class IndexController {
      */
     @ResponseBody
     @RequestMapping(value = "/getIndexQusetionList")
-    public List<QuestionsEntity> getIndexQusetionList(){
-        List<QuestionsEntity> indexQusetionList = questionService.getIndexQusetionList();
+    public PageInfo<QuestionsEntity> getIndexQusetionList(@RequestParam(value="pageNo",defaultValue="1")int pageNo, @RequestParam(value="pageSize",defaultValue="10")int pageSize){
+        List<QuestionsEntity> indexQusetionList = questionService.getIndexQusetionList(pageNo,pageSize);
+        PageInfo<QuestionsEntity> questionsEntityPageInfo =
         return indexQusetionList;
     }
 }

@@ -15,7 +15,7 @@ public class QuestionsEntity {
     private String description;
     private long gmtCreate;
     private long gmtModifile;
-    private Integer creater;
+    private String creater;
     private Integer commentCount;
     private Integer viewCount;
     private Integer likeCount;

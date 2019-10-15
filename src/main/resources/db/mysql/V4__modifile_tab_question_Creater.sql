@@ -1,0 +1,1 @@
+alter table question modify creater varchar(50) null;

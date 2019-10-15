@@ -9,10 +9,24 @@ github:
     secret: 73e40515a345fc6e0c5fdad4816a5bf88ea82d3a
   redirect:
     uri: http://localhost:8889/callback
+
 #激活配置环境
 spring:
+  mvc:
+    static-path-pattern: /** #能够让springboot识别到static目录下所有的子目录
   profiles:
     active: mysql
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+
+#pagehelper分页插件配置
+pagehelper:
+  helper-dialect: mysql
+  reasonable: true
+  support-methods-arguments: true
+  params: count=countSql
+
 ---
 # h2数据库环境
 spring:

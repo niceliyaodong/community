@@ -4,6 +4,8 @@ import com.liyaod.community.community.mapper.QuestionMapper;
 import com.liyaod.community.community.mapper.UserMapper;
 import com.liyaod.community.community.model.Question;
 import com.liyaod.community.community.model.User;
+import com.liyaod.community.community.service.QuestionService;
+import com.liyaod.community.community.service.UserService;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,11 +22,15 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 public class PublishController {
 
+    /*@Autowired
+    private QuestionMapper questionMapper;*/
     @Autowired
-    private QuestionMapper questionMapper;
+    private QuestionService questionService;
 
+    /*@Autowired
+    private UserMapper userMapper;*/
     @Autowired
-    private UserMapper userMapper;
+    private UserService userService;
 
     @GetMapping("/publish")
     public String getPublish() {
@@ -56,7 +62,7 @@ public class PublishController {
             for (Cookie cookie : cookies) {
                 if (cookie.getName().equals("token")) {
                     String token = cookie.getValue();
-                    user = userMapper.findOmeByToken(token);
+                    user = userService.findOmeByToken(token);
                     if (user != null) {
                         request.getSession().setAttribute("user", user);
                     }
@@ -70,10 +76,10 @@ public class PublishController {
             //返回当前页面
             return "publish";
         }
-        question.setCreater(user.getId());
+        question.setCreater(user.getAccountId());
         question.setGmtCreate(System.currentTimeMillis());
         question.setGmtModifile(question.getGmtCreate());
-        questionMapper.inserQuestion(question);
+        questionService.inserQuestion(question);
         return "redirect:/";
     }
 }

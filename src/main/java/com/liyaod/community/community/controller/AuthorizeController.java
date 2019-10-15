@@ -5,6 +5,7 @@ import com.liyaod.community.community.entity.GithubUserEntity;
 import com.liyaod.community.community.mapper.UserMapper;
 import com.liyaod.community.community.model.User;
 import com.liyaod.community.community.provider.GithubProvider;
+import com.liyaod.community.community.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -27,7 +28,7 @@ public class AuthorizeController {
     private GithubProvider githubProvider;
 
     @Autowired
-    private UserMapper userMapper;
+    private UserService userService;
 
     @Value("${github.client.id}")
     private String clientId;
@@ -56,7 +57,7 @@ public class AuthorizeController {
             user.setAvatarUrl(gethubUser.getAvatarUrl());
             String token = UUID.randomUUID().toString();
             user.setToken(token);
-            userMapper.inserUser(user);
+            userService.inserUser(user);
             Cookie cookie = new Cookie("token",token);
             response.addCookie(cookie);
             //request.getSession().setAttribute("user", gethubUser);

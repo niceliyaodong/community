@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="css/bootstrap.min.css"/>
     <link rel="stylesheet" href="css/bootstrap-theme.min.css"/>
     <link rel="stylesheet" href="css/community.css">
-    <script src="js/bootstrap.min.js" type="application/javascript"></script>
+
 </head>
 <body>
 <nav class="navbar navbar-default">
@@ -52,7 +52,10 @@
         <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
             <h2><span class="glyphicon glyphicon-list" aria-hidden="true"></span>发现</h2>
             <hr>
-            <div class="media">
+            <div id="questionList">
+
+            </div>
+            <!--<div class="media">
                 <div class="media-left">
                     <a href="#">
                         <img class="media-object img-circle"
@@ -65,7 +68,7 @@
                         <span>0</span> 个回复 • <span>4</span> 次浏览 • <span>2019-10-14 16:01</span>
                     </span>
                 </div>
-            </div>
+            </div>-->
         </div>
         <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
             <h3>热门话题</h3>
@@ -73,4 +76,49 @@
     </div>
 </div>
 </body>
+<script src="js/bootstrap.min.js" type="application/javascript"></script>
+<script src="js/jquery/jquery-1.11.3.min.js"></script>
+<script>
+    $(function () {
+        $.post('/getIndexQusetionList', function (data) {
+            var str = "";
+            for (var i = 0; i < data.length; i++) {
+                str += '<div class="media">\n' +
+                    '                <div class="media-left">\n' +
+                    '                    <a href="#">\n' +
+                    '                        <img class="media-object img-circle"\n' +
+                    '                             src="' + data[i].user.avatarUrl + '">\n' +
+                    '                    </a>\n' +
+                    '                </div>\n' +
+                    '                <div class="media-body">\n' +
+                    '                    <h4 class="media-heading">' + data[i].title + '</h4>\n' +
+                    '                    <span class="text-desc">\n' +
+                    '                        <span>' + data[i].commentCount + '</span> 个回复 • <span>' + data[i].viewCount + '</span> 次浏览 • <span>' + changeTime(data[i].gmtCreate) + '</span>\n' +
+                    '                    </span>\n' +
+                    '                </div>\n' +
+                    '            </div>';
+            }
+            $('#questionList').html(str);
+        });
+        console.log(changeTime(1534301216395));
+    });
+
+    function changeTime(time){
+        var commonTime = "";
+        if(time){
+            var unixTimestamp = new Date(time*1) ;
+            commonTime = unixTimestamp.toLocaleString();
+        }
+        return commonTime;
+    }
+
+    /**
+     * 重写toLocaleString方法
+     * @returns {string}
+     */
+    Date.prototype.toLocaleString = function () {
+        return this.getFullYear() + "年" + (this.getMonth() + 1) + "月" + this.getDate() + "日 " + this.getHours() + "点" + this.getMinutes() + "分" + this.getSeconds() + "秒";
+    };
+
+</script>
 </html>
