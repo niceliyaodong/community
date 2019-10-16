@@ -1,6 +1,7 @@
 package com.liyaod.community.community.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.liyaod.community.community.entity.PaginactionEntity;
 import com.liyaod.community.community.entity.QuestionsEntity;
 import com.liyaod.community.community.mapper.UserMapper;
 import com.liyaod.community.community.model.User;
@@ -56,9 +57,8 @@ public class IndexController {
      */
     @ResponseBody
     @RequestMapping(value = "/getIndexQusetionList")
-    public PageInfo<QuestionsEntity> getIndexQusetionList(@RequestParam(value="pageNo",defaultValue="1")int pageNo, @RequestParam(value="pageSize",defaultValue="10")int pageSize){
-        List<QuestionsEntity> indexQusetionList = questionService.getIndexQusetionList(pageNo,pageSize);
-        PageInfo<QuestionsEntity> questionsEntityPageInfo =
+    public PageInfo<QuestionsEntity> getIndexQusetionList(@RequestParam(value="pageNo",defaultValue="1")Integer pageNo, @RequestParam(value="pageSize",defaultValue="10")Integer pageSize){
+        PageInfo<QuestionsEntity> indexQusetionList = questionService.getIndexQusetionList(pageNo,pageSize);
         return indexQusetionList;
     }
 }

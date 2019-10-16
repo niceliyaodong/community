@@ -1,5 +1,8 @@
 package com.liyaod.community.community.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.liyaod.community.community.entity.PaginactionEntity;
 import com.liyaod.community.community.entity.QuestionsEntity;
 import com.liyaod.community.community.mapper.QuestionMapper;
 import com.liyaod.community.community.mapper.UserMapper;
@@ -27,7 +30,8 @@ public class QuestionServiceImpl implements QuestionService {
     private UserMapper userMapper;
 
     @Override
-    public List<QuestionsEntity> getIndexQusetionList(int pageNo,int pageSize) {
+    public PageInfo<QuestionsEntity> getIndexQusetionList(Integer pageNo, Integer pageSize) {
+        PageHelper.startPage(pageNo, pageSize);
         List<Question> listQuestion = questionMapper.findAllQuestions();
         List<QuestionsEntity> questionsEntityList = new ArrayList<QuestionsEntity>();
         for (Question question : listQuestion) {
@@ -38,7 +42,15 @@ public class QuestionServiceImpl implements QuestionService {
             questionsEntity.setUser(user);
             questionsEntityList.add(questionsEntity);
         }
-        return questionsEntityList;
+        PageInfo<QuestionsEntity> pageInfo = new PageInfo<QuestionsEntity>(questionsEntityList);
+
+
+       /* PaginactionEntity<QuestionsEntity> paginactionEntity = new PaginactionEntity<QuestionsEntity>();
+        paginactionEntity.setList(questionsEntityList);
+        paginactionEntity.setPage(pageNo);
+        Integer totalCount = questionMapper.count();
+        paginactionEntity.setPaginaction(totalCount,pageNo,pageSize);*/
+        return pageInfo;
     }
 
     @Override

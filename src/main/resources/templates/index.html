@@ -55,6 +55,26 @@
             <div id="questionList">
 
             </div>
+            <div class="M-box"></div>
+           <!-- <nav aria-label="Page navigation">
+                <ul class="pagination">
+                    <li>
+                        <a href="#" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <li><a href="#">1</a></li>
+                    <li><a href="#">2</a></li>
+                    <li><a href="#">3</a></li>
+                    <li><a href="#">4</a></li>
+                    <li><a href="#">5</a></li>
+                    <li>
+                        <a href="#" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>-->
             <!--<div class="media">
                 <div class="media-left">
                     <a href="#">
@@ -78,9 +98,12 @@
 </body>
 <script src="js/bootstrap.min.js" type="application/javascript"></script>
 <script src="js/jquery/jquery-1.11.3.min.js"></script>
+<script src="js/jquery/jquery.pagination.js"></script>
 <script>
     $(function () {
         $.post('/getIndexQusetionList', function (data) {
+            data = data.list;
+            console.log(data);
             var str = "";
             for (var i = 0; i < data.length; i++) {
                 str += '<div class="media">\n' +
@@ -120,5 +143,12 @@
         return this.getFullYear() + "年" + (this.getMonth() + 1) + "月" + this.getDate() + "日 " + this.getHours() + "点" + this.getMinutes() + "分" + this.getSeconds() + "秒";
     };
 
+    $('.M-box2').pagination({
+        coping: true,
+        homePage: '首页',
+        endPage: '末页',
+        prevContent: '上页',
+        nextContent: '下页'
+    });
 </script>
 </html>

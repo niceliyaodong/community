@@ -22,9 +22,9 @@ mybatis:
 
 #pagehelper分页插件配置
 pagehelper:
-  helper-dialect: mysql
+  helperDialect: mysql
   reasonable: true
-  support-methods-arguments: true
+  supportMethodsArguments: true
   params: count=countSql
 
 ---

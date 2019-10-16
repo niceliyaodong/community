@@ -1,5 +1,7 @@
 package com.liyaod.community.community.service;
 
+import com.github.pagehelper.PageInfo;
+import com.liyaod.community.community.entity.PaginactionEntity;
 import com.liyaod.community.community.entity.QuestionsEntity;
 import com.liyaod.community.community.model.Question;
 import org.springframework.stereotype.Service;
@@ -12,7 +14,7 @@ import java.util.List;
  */
 public interface QuestionService {
 
-    List<QuestionsEntity> getIndexQusetionList(int pageNo,int pageSize);
+    PageInfo<QuestionsEntity> getIndexQusetionList(Integer pageNo, Integer pageSize);
 
     void inserQuestion(Question question);
 }
