@@ -14,7 +14,11 @@ import java.util.List;
  */
 public interface QuestionService {
 
-    PageInfo<QuestionsEntity> getIndexQusetionList(Integer pageNo, Integer pageSize);
+    PaginactionEntity<QuestionsEntity> getIndexQusetionList(Integer pageNo, Integer pageSize);
 
     void inserQuestion(Question question);
+
+    PageInfo<QuestionsEntity> getQusetionList(Integer pageNo, Integer pageSize);
+
+    PageInfo<QuestionsEntity> getQuestionAndUserList(Integer pageNo, Integer pageSize);
 }

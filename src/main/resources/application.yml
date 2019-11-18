@@ -16,16 +16,26 @@ spring:
     static-path-pattern: /** #能够让springboot识别到static目录下所有的子目录
   profiles:
     active: mysql
+  thymeleaf:
+    cache: false #禁止thymeleaf缓存（建议：开发环境设置为false，生成环境设置为true）
+  redis:
+    database: 5
+    timeout: 5000
+    host: 10.252.1.21
+    port: 6379
+    password:
+    jedis:
+      pool:
+        max-active: 8
+        max-wait: -1
+        max-idle: 8
+        min-idle: 0
 mybatis:
-  configuration:
-    map-underscore-to-camel-case: true
+  config-location: classpath:mybatis/mybatis-config.xml
+  mapper-locations: classpath:mybatis/mapper/*.xml
 
-#pagehelper分页插件配置
-pagehelper:
-  helperDialect: mysql
-  reasonable: true
-  supportMethodsArguments: true
-  params: count=countSql
+
+
 
 ---
 # h2数据库环境

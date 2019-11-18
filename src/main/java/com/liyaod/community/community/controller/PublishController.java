@@ -1,12 +1,8 @@
 package com.liyaod.community.community.controller;
 
-import com.liyaod.community.community.mapper.QuestionMapper;
-import com.liyaod.community.community.mapper.UserMapper;
 import com.liyaod.community.community.model.Question;
 import com.liyaod.community.community.model.User;
 import com.liyaod.community.community.service.QuestionService;
-import com.liyaod.community.community.service.UserService;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,7 +26,7 @@ public class PublishController {
     /*@Autowired
     private UserMapper userMapper;*/
     @Autowired
-    private UserService userService;
+    //private UserService userService;
 
     @GetMapping("/publish")
     public String getPublish() {
@@ -62,7 +58,7 @@ public class PublishController {
             for (Cookie cookie : cookies) {
                 if (cookie.getName().equals("token")) {
                     String token = cookie.getValue();
-                    user = userService.findOmeByToken(token);
+                   // user = userService.findOmeByToken(token);
                     if (user != null) {
                         request.getSession().setAttribute("user", user);
                     }
